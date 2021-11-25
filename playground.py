@@ -12,20 +12,34 @@ def sort_dates(file):
 
     head = True
 
-    with open(file, "r", newline='') as csvread:
+    with open(file, "r", newline='', encoding="utf8") as csvread:
 
         CASOS = csv.reader(csvread, delimiter=';')
         for caso in CASOS:
-
+            # print(".")
             if head:
                 head = False
                 continue
+
+            if caso[9] != "CURITIBA":
+                continue
+
             data = str(caso[-8])
             dose = caso[-1]
             if dose == "1":
-                vacinas[data][0] += 1
+                try:
+                    vacinas[data][0] += 1
+                except:
+                    print("data fora")
+                    continue
             elif dose == "2":
-                vacinas[data][1] += 1
-            else:
-                print(dose)
+                try:
+                    vacinas[data][1] += 1
+                except:
+                    print("data fora")
+                    continue
+
     return vacinas
+
+# COVID-19 JANSSEN = > 8
+# COVID-19 PFIZER => 37,38

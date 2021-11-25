@@ -3,8 +3,9 @@ import csv
 
 x = []
 y = []
+z = []
 head = True
-with open('Casos_COVID_clear.csv', 'r') as csvfile:
+with open('Vacinas_COVID_clear.csv', 'r') as csvfile:
     plots = csv.reader(csvfile, delimiter=';')
 
     for row in plots:
@@ -13,10 +14,12 @@ with open('Casos_COVID_clear.csv', 'r') as csvfile:
             continue
         x.append(row[0])
         y.append(int(row[2]))
+        z.append(int(row[1]))
 
-plt.plot(x, y, color='r', label="Óbitos")
+plt.plot(x, y, color='b', label="2 Dose")
+plt.plot(x, z, color='g', label="1 Dose")
 plt.xlabel('Dias')
-plt.ylabel('Óbitos')
-plt.title('Óbitos pelo passar do tempo')
+plt.ylabel('Dose')
+plt.title('Doses')
 plt.legend()
-plt.savefig("Óbitos_tempo.png")
+plt.savefig("dose.png")

@@ -47,7 +47,7 @@ def casos():
 # 2021-01-11
 
 
-vacinas = sort_dates("Vacinas_teste.csv")
+vacinas = sort_dates("vacinas.csv")
 with open(r'Vacinas_COVID_clear.csv', "w", newline='', encoding="utf-8") as csv_write:
     csv_clear = csv.writer(csv_write, delimiter=';',
                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
