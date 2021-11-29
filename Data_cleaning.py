@@ -47,11 +47,33 @@ def casos():
 # 2021-01-11
 
 
-vacinas = sort_dates("vacinas.csv")
+'''vacinas = sort_dates("vacinas.csv")
 with open(r'Vacinas_COVID_clear.csv', "w", newline='', encoding="utf-8") as csv_write:
     csv_clear = csv.writer(csv_write, delimiter=';',
                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
     csv_clear.writerow(['data', '1', '2'])
     for datas, doses in vacinas.items():
-        csv_clear.writerow([datas, doses[0], doses[1]])
+        csv_clear.writerow([datas, doses[0], doses[1]])'''
+
+
+vacinas = {}
+Pop = 1963726
+sum_one = 0
+sum_two = 0
+
+with open(r'Vacinas_COVID_clear.csv', "r", newline='', encoding="utf-8") as csv_write:
+    csv_read = csv.reader(csv_write, delimiter=';',
+                          quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    for dias in csv_read:
+        sum_one = sum_one+int(dias[1])
+        sum_two = sum_two+int(dias[2])
+        vacinas[dias[0]] = [f'{((sum_one)/Pop)*100:.3f}',
+                            f'{((sum_two)/Pop)*100:.3f}']
+
+with open(r'Casos_COVID_clear_porc.csv', "w", newline='', encoding="utf-8") as csv_write:
+    csv_writer = csv.writer(csv_write, delimiter=';',
+                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    csv_writer.writerow(['data', '1%', '2%'])
+    for datas, doses in vacinas.items():
+        csv_writer.writerow([datas, doses[0], doses[1]])
