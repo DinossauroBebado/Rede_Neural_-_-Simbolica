@@ -1,1 +1,3 @@
-covid_train.head()
+print("--------------------------")
+print(covid_train)
+print("--------------------------")
