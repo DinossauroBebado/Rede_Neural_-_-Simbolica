@@ -11,9 +11,12 @@ import matplotlib.pyplot as plt
 
 from rede_neural_vis import ploter
 
-epoc = 300
+epoc = 20
 batch = 32
 dias = 20
+
+'''https: // www.section.io/engineering-education/stock-price-prediction-using-python/
+https: // www.tensorflow.org/guide/keras/sequential_model'''
 
 
 def create_dataset(df):
@@ -22,7 +25,9 @@ def create_dataset(df):
     print(df)
     print("-------DB---------------------------------------------")
     for i in range(dias, df.shape[0]):
-        x.append(df[i-dias:i, 0].extend[df[i][1], df[i][2], df[i][3]])
+        days = df[i-dias:i, 0]
+        infos = np.array([df[i][1], df[i][2], df[i][3]])
+        x.append(np.concatenate((days, infos)))
         y.append(df[i, 0])
     x = np.array(x)
     y = np.array(y)
@@ -55,14 +60,12 @@ dataset_test = scaler.transform(covid_test)
 
 x_train, y_train = create_dataset(dataset_train)
 x_test, y_test = create_dataset(dataset_test)
-print("-------DB---------------------------------------------")
-print(x_train)
-print("-------DB---------------------------------------------")
-"""x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+
+x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
 
-print(x_test)"""
-'''
+print(x_test)
+
 model = Sequential()
 model.add(LSTM(units=96, return_sequences=True,
           input_shape=(x_train.shape[1], 1)))
@@ -81,14 +84,17 @@ x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
 model.compile(loss='mean_squared_error', optimizer='adam')
 
 model.fit(x_train, y_train, epochs=epoc, batch_size=batch)
-model.save('covid_predict.h5')
+model.save('full_covid_predict.h5')
 
-# model = load_model('covid_predict.h5')
+#model = load_model('full_covid_predict.h5')
 
-predictions = model.predict(x_test)
+'''y_test_scaled = scaler.inverse_transform(y_test.reshape(-1, 1))'''
+print(y_test)
+"""predictions = model.predict(x_test)
 predictions = scaler.inverse_transform(predictions)
+
 y_test_scaled = scaler.inverse_transform(y_test.reshape(-1, 1))
 
 
 ploter(y_test_scaled, predictions, epoc, batch, dias)
-'''
+"""

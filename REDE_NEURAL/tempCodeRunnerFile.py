@@ -1,3 +1,1 @@
-print("--------------------------")
-print(covid_train)
-print("--------------------------")
+y_test_scaled = scaler.inverse_transform(y_test.reshape(-1, 1))
